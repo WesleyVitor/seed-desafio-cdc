@@ -19,5 +19,17 @@ class Author(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['email'], name='unique_email')
         ]
+
+class Category(models.Model):
+    """
+    Guarda informações sobre categorias
+    """
+
+    name = models.CharField(max_length=100, null=False, blank=False)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name'], name='unique_name')
+        ]
         
 
