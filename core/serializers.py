@@ -11,5 +11,15 @@ class AuthorSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(f"Já existe um Author(a) com o e-mail {value} já cadastrado.")
         return value
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ("name",)
+    
+    def validate_name(self, value):
+        if Category.objects.filter(name=value).exists():
+            raise serializers.ValidationError(f"Já existe uma Categoria com o nome {value} já cadastrado.")
+        return value
+
 
 
