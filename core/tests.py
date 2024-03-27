@@ -37,7 +37,7 @@ class AuthorCreateTest(APITestCase):
         response = self.client.post(url, data, format='json')
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.data, {"email": ["Email já cadastrado"]})
+        self.assertEqual(response.data, {"email": ["Já existe um Autor com este email."]})
         
         amount_of_authors = Author.objects.filter(email="autor@gmail.com").count()
         self.assertEqual(amount_of_authors, 1)
