@@ -1,6 +1,6 @@
 from rest_framework import generics
 from core.models import *
-from core.serializers import AuthorSerializer, CategorySerializer
+from core.serializers import AuthorSerializer, CategorySerializer, BookSerializer
 
 class AuthorCreate(generics.CreateAPIView):
     """
@@ -15,4 +15,11 @@ class CategoryCreate(generics.CreateAPIView):
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+class BookCreate(generics.CreateAPIView):
+    """
+    Cria um novo Livro
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
     
