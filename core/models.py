@@ -31,5 +31,24 @@ class Category(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['name'], name='unique_name')
         ]
+    
+class Book(models.Model):
+    """
+    Guarda informações sobre livros
+    """
+
+    title = models.CharField(max_length=100, null=False, blank=False, unique=True)
+    resume = models.CharField(max_length=500, null=False, blank=False)
+    sumary = models.TextField()
+    price = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
+    numbers_of_pages = models.IntegerField(null=False, blank=False)
+    isbn = models.CharField(max_length=100, null=False, blank=False, unique=True)
+    publication_date = models.DateTimeField()
+
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null=False, blank=False)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=False, blank=False)
+
+
+
         
 
