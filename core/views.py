@@ -1,6 +1,6 @@
 from rest_framework import generics
 from core.models import *
-from core.serializers import AuthorSerializer, CategorySerializer, BookSerializer
+from core.serializers import *
 
 class AuthorCreate(generics.CreateAPIView):
     """
@@ -16,10 +16,15 @@ class CategoryCreate(generics.CreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
-class BookCreate(generics.CreateAPIView):
+class BookListCreate(generics.ListCreateAPIView):
     """
-    Cria um novo Livro
+    Cria e ler um novo Livro
     """
     queryset = Book.objects.all()
-    serializer_class = BookSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return BookSerializer
+        return BookListSerializer
+    
     

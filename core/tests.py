@@ -48,7 +48,7 @@ class AuthorCreateTest(APITestCase):
         self.assertEqual(amount_of_authors, 1)
     
 
-class BookCreateTest(APITestCase):
+class BookListCreateTest(APITestCase):
 
     def setUp(self) -> None:
         self.author = baker.make("core.Author")
@@ -181,3 +181,29 @@ class BookCreateTest(APITestCase):
         
         self.assertEqual(response.status_code, 400)
         self.assertEqual(str(response.data['publication_date'][0]), "A data de publicação não pode ser menor que a data atual.")
+
+    def test_list_books(self):
+        """
+        Testa listagem de livros
+        """
+
+        baker.make(
+            "core.Book", 
+            title="Livro 1", 
+            resume="Resumo do livro", 
+            sumary="Sumário do livro", 
+            price=30.00, 
+            numbers_of_pages=200, 
+            isbn="1234567890", 
+            publication_date='2021-01-01', 
+            category=self.category, 
+            author=self.author
+        )  
+        
+        url = reverse("book_create")
+        response = self.client.get(url, format='json')
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+        
+    

@@ -1,8 +1,10 @@
 from core.models import *
 from rest_framework import serializers 
-#from core.validators import *
+
 from rest_framework.validators import UniqueValidator
 from django.utils import timezone
+
+from django_virtual_models import VirtualModelSerializer
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -63,3 +65,7 @@ class BookSerializer(serializers.ModelSerializer):
         
         return publication_date
 
+class BookListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ('id', 'title')
