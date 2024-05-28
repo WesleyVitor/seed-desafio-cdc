@@ -6,6 +6,8 @@ from django.utils import timezone
 
 from django_virtual_models import VirtualModelSerializer
 
+from core.virtual_model import BookDetailVirtualModel
+
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Author
@@ -69,3 +71,31 @@ class BookListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = ('id', 'title')
+    
+class AuthorDetailSerializer(VirtualModelSerializer):
+    class Meta:
+        model = Author
+        fields = ('name', 'description')
+    
+class CategoryDetailSerializer(VirtualModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('name',)
+    
+class BookDetailSerializer(VirtualModelSerializer):
+    author = AuthorDetailSerializer()
+    category = CategoryDetailSerializer()
+    class Meta:
+        model = Book
+        virtual_model = BookDetailVirtualModel
+        fields = (
+            'title',
+            'resume',
+            'sumary',
+            'price',
+            'numbers_of_pages',
+            'isbn',
+            'publication_date',
+            'author',
+            'category'
+        )

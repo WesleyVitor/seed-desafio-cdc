@@ -2,6 +2,8 @@ from rest_framework import generics
 from core.models import *
 from core.serializers import *
 
+from django_virtual_models import VirtualModelRetrieveAPIView
+
 class AuthorCreate(generics.CreateAPIView):
     """
     Cria um novo Autor
@@ -26,5 +28,12 @@ class BookListCreate(generics.ListCreateAPIView):
         if self.request.method == 'POST':
             return BookSerializer
         return BookListSerializer
+
+class BookDetailView(VirtualModelRetrieveAPIView):
+    """
+    Detalha um Livro
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookDetailSerializer
     
     

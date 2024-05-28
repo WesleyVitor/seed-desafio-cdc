@@ -205,5 +205,33 @@ class BookListCreateTest(APITestCase):
         
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 1)
+
+class BookDetailViewTest(APITestCase):
+    def test_list_detail_of_book(self):
+        """
+        Testa detalhes de um livro
+        """
+        author = baker.make("core.Author", name="Autor 1", description="Descrição do autor")
+        category = baker.make("core.Category")
+        book = baker.make(
+            "core.Book", 
+            title="Livro 1", 
+            resume="Resumo do livro", 
+            sumary="Sumário do livro", 
+            price=30.00, 
+            numbers_of_pages=200, 
+            isbn="1234567890", 
+            publication_date='2021-01-01', 
+            category=category, 
+            author=author
+        )  
+        
+        url = reverse("book_detail", kwargs={"pk": book.id})
+        response = self.client.get(url, format='json')
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['title'], "Livro 1")
+        self.assertEqual(response.data['author']['name'], "Autor 1")
+        self.assertEqual(response.data['author']['description'], "Descrição do autor")
         
     
