@@ -1,4 +1,4 @@
-from core.models import *
+from core.models import Author, Category, Book, Country, State
 from rest_framework import serializers 
 
 from rest_framework.validators import UniqueValidator
@@ -99,3 +99,27 @@ class BookDetailSerializer(VirtualModelSerializer):
             'author',
             'category'
         )
+    
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = ('name',) 
+        extra_kwargs = {
+            'name': { 
+                'validators': [
+                    UniqueValidator(queryset=Country.objects.all(), message="Já existe um país com este nome.")
+                ]
+            },
+        }
+    
+class StateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = State
+        fields = ('name','country') 
+        extra_kwargs = {
+            'name': { 
+                'validators': [
+                    UniqueValidator(queryset=Country.objects.all(), message="Já existe um estado com este nome.")
+                ]
+            },
+        }

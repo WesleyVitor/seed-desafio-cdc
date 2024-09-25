@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import *
 from datetime import datetime
 # Create your models here.
 
@@ -48,7 +47,24 @@ class Book(models.Model):
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null=False, blank=False)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=False, blank=False)
 
+class Country(models.Model):
+    """
+    Guarda informações sobre paises
+    """
+    name = models.CharField(max_length=100, null=False, blank=False)
 
+    def __str__(self) -> str:
+        return self.name
+
+class State(models.Model):
+    """
+    Guarda informações sobre estados
+    """
+    name = models.CharField(max_length=100, null=False, blank=False)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, null=False, blank=False)
+
+    def __str__(self) -> str:
+        return self.name
 
         
 

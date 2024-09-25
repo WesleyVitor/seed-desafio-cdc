@@ -1,6 +1,6 @@
 from rest_framework import generics
-from core.models import *
-from core.serializers import *
+from core.models import Author, Category, Book, Country, State
+from core.serializers import StateSerializer, CountrySerializer, AuthorSerializer, CategorySerializer, BookSerializer, BookListSerializer, BookDetailSerializer
 
 from django_virtual_models import VirtualModelRetrieveAPIView
 
@@ -37,3 +37,17 @@ class BookDetailView(VirtualModelRetrieveAPIView):
     serializer_class = BookDetailSerializer
     
     
+
+class CountryCreate(generics.CreateAPIView):
+    """
+    Cria um novo país
+    """
+    queryset = Country.objects.all()
+    serializer_class = CountrySerializer
+
+class StateCreate(generics.CreateAPIView):
+    """
+    Cria um novo país
+    """
+    queryset = State.objects.all()
+    serializer_class = StateSerializer
