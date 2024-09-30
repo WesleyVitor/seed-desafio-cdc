@@ -123,3 +123,19 @@ class StateSerializer(serializers.ModelSerializer):
                 ]
             },
         }
+
+class PaymentSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+    street = serializers.CharField(required=True)
+    comp = serializers.CharField(required=True)
+    document = serializers.CharField(required=True)
+    document_type = serializers.CharField(required=True)
+    phone = serializers.CharField(required=True)
+    cep = serializers.CharField(required=True)
+    #city = serializers.PrimaryKeyRelatedField(queryset = City.objects.filter(active=True), required = True)
+    country = serializers.PrimaryKeyRelatedField(queryset = Country.objects.all(), required = True)
+    state = serializers.PrimaryKeyRelatedField(queryset = State.objects.all(), required = True)
+    
+            

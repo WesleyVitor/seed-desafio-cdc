@@ -234,4 +234,27 @@ class BookDetailViewTest(APITestCase):
         self.assertEqual(response.data['author']['name'], "Autor 1")
         self.assertEqual(response.data['author']['description'], "Descrição do autor")
         
-    
+class PaymentFlowCreateViewTest(APITestCase):
+    def test_payment_flow_create_view(self):
+        """
+        """
+        country = baker.make("core.Country", name="Brasil")
+        state = baker.make("core.State", country=country, name="RN")
+        url = reverse("payment_flow_create_view")
+        data = {
+            "email":"algo@gmail.com",
+            "name":"algo de algo",
+            "last_name": "algo",
+            "document":"12265968598",
+            "document_type":"cpf",
+            "street":"severino costa",
+            "comp":"A",
+            "city":"Caicó",
+            "country":country.id,
+            "state":state.id,
+            "phone":"84999589898",
+            "cep":"59300000"
+        }
+        response = self.client.post(url, data=data, format='json')
+        self.assertEqual(response.status_code, 201)
+        
